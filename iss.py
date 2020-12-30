@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 
-# List of astronauts
 # http://api.open-notify.org/astros.json
 # http://api.open-notify.org/iss-now.json
 # http://api.open-notify.org/iss-pass.json
@@ -8,11 +7,7 @@
 __author__ = 'Daniel S. Waite'
 
 import requests
-
-# write a Python program to obtain a list of the 
-# astronauts who are currently in space. 
-# Print their full names, the spacecraft they are currently on board, 
-# and the total number of astronauts in space.
+import turtle
 
 def main():
     r = requests.get("http://api.open-notify.org/astros.json").json()
@@ -23,6 +18,21 @@ def main():
         print(names.get("name"))
     print()
 
+    coordinates = requests.get("http://api.open-notify.org/iss-now.json").json().get("iss_position")
+    latitude = float(coordinates.get("latitude"))
+    longitude = float(coordinates.get("longitude"))
+
+
+    backdrop = turtle.Screen()
+    backdrop.bgpic("map.gif")
+
+    iss = turtle.Turtle()
+    backdrop.register_shape("iss.gif")
+    iss.shape("iss.gif")
+    iss.penup()
+    iss.goto(latitude, longitude)
+    turtle.done()
+    
 
 if __name__ == '__main__':
     main()
