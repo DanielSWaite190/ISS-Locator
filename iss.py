@@ -23,7 +23,14 @@ def main():
     backdrop = turtle.Screen()
     backdrop.bgpic("map.gif")
 
-    passover = requests.get("http://api.open-notify.org/iss-pass.json?lat=-86.158&lon=39.7684").json()
+    p = requests.get("http://api.open-notify.org/iss-pass.json?lat=-86.158&lon=39.7684")
+    try:
+        p.raise_for_status()
+    except requests.exceptions.HTTPError:
+        print("\n\nTHE API IS DOWN\n\n")  
+
+    passover = p.json
+    
     # passover = {
     #     "message": "success",
     #     "request": {
@@ -43,7 +50,7 @@ def main():
     iss.shape("iss.gif")
     iss.penup()
     iss.goto(latitude, longitude)
-    iss.write(time.ctime(passover.get("request").get("datetime")), font=('Courier', 12, 'bold'), align='left')
+    iss.write(time.ctime(coordinates.get("timestamp")), font=('Courier', 12, 'bold'), align='left')
     
 
     indianapolis = turtle.Turtle()
@@ -53,7 +60,7 @@ def main():
     indianapolis.goto(-86.158, 39.7684)
 
     indianapolis.color("yellow") # <-- wrong
-    indianapolis.write(time.ctime(coordinates.get("timestamp")), font=('Courier', 12, 'bold'), align='left')
+    indianapolis.write(time.ctime(passover.get("request").get("datetime")), font=('Courier', 12, 'bold'), align='left')
 
     # print(time.ctime(passover.get("request").get("datetime")))
     # print(time.ctime(coordinates.get("timestamp")))
