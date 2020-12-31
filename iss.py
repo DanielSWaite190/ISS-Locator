@@ -2,8 +2,10 @@
 
 __author__ = 'Daniel S. Waite'
 
+from datetime import datetime
 import requests
 import turtle
+import time
 
 def main():
     r = requests.get("http://api.open-notify.org/astros.json").json()
@@ -14,12 +16,25 @@ def main():
         print(names.get("name"))
     print()
 
-    coordinates = requests.get("http://api.open-notify.org/iss-now.json").json().get("iss_position")
-    latitude = float(coordinates.get("latitude"))
-    longitude = float(coordinates.get("longitude"))
+    coordinates = requests.get("http://api.open-notify.org/iss-now.json").json()
+    latitude = float(coordinates.get("iss_position").get("latitude"))
+    longitude = float(coordinates.get("iss_position").get("longitude"))
 
     backdrop = turtle.Screen()
     backdrop.bgpic("map.gif")
+
+    # passover = requests.get("http://api.open-notify.org/iss-pass.json?lat=-86.158&lon=39.7684").json()
+    passover = {
+        "message": "success",
+        "request": {
+        "latitude": 1234,
+        "longitude": 5678, 
+        "altitude": 5,
+        "passes": 7,
+        "datetime": 1545730073
+        },
+            "response": [{"risetime": 1545730073, "duration": "3 hours"}]
+        }
 
     iss = turtle.Turtle()
     backdrop.setup(width=720, height=360)
@@ -28,6 +43,7 @@ def main():
     iss.shape("iss.gif")
     iss.penup()
     iss.goto(latitude, longitude)
+    iss.write(time.ctime(passover.get("request").get("datetime")), font=('Courier', 12, 'bold'), align='left')
     
 
     indianapolis = turtle.Turtle()
@@ -36,10 +52,13 @@ def main():
     indianapolis.penup()
     indianapolis.goto(-86.158, 39.7684)
 
-    turtle.done()
+    indianapolis.color("yellow") # <-- wrong
+    indianapolis.write(time.ctime(coordinates.get("timestamp")), font=('Courier', 12, 'bold'), align='left')
 
-    # http://api.open-notify.org/iss-pass.json?=36
-    # http://api.open-notify.org/iss-pass.json
+    # print(time.ctime(passover.get("request").get("datetime")))
+    # print(time.ctime(coordinates.get("timestamp")))
+
+    turtle.done()
 
 if __name__ == '__main__':
     main()
