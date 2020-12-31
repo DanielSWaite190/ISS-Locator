@@ -23,18 +23,18 @@ def main():
     backdrop = turtle.Screen()
     backdrop.bgpic("map.gif")
 
-    # passover = requests.get("http://api.open-notify.org/iss-pass.json?lat=-86.158&lon=39.7684").json()
-    passover = {
-        "message": "success",
-        "request": {
-        "latitude": 1234,
-        "longitude": 5678, 
-        "altitude": 5,
-        "passes": 7,
-        "datetime": 1545730073
-        },
-            "response": [{"risetime": 1545730073, "duration": "3 hours"}]
-        }
+    passover = requests.get("http://api.open-notify.org/iss-pass.json?lat=-86.158&lon=39.7684").json()
+    # passover = {
+    #     "message": "success",
+    #     "request": {
+    #     "latitude": 1234,
+    #     "longitude": 5678, 
+    #     "altitude": 5,
+    #     "passes": 7,
+    #     "datetime": 1545730073
+    #     },
+    #         "response": [{"risetime": 1545730073, "duration": "3 hours"}]
+    #     }
 
     iss = turtle.Turtle()
     backdrop.setup(width=720, height=360)
