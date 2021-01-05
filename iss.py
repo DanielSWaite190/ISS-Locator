@@ -23,8 +23,8 @@ def main():
     backdrop = turtle.Screen()
     backdrop.bgpic("map.gif")
 
-    p = requests.get("http://api.open-notify.org/iss-pass.json?lat=-86.158&lon=39.7684")
     try:
+        p = requests.get("http://api.open-notify.org/iss-pass.json?lat=-86.158&lon=39.7684")
         p.raise_for_status()
     except requests.exceptions.HTTPError:
         print("\n\nTHE API IS DOWN\n\n")  
