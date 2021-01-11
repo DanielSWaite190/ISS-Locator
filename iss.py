@@ -30,7 +30,7 @@ def main():
     # backdrop.bgpic("map.gif")
 
     try:
-        p = requests.get("http://api.open-notify.org/iss-pass.json?lat=39.7684&lon=86.158")
+        p = requests.get("http://api.open-notify.org/iss-pass.json?lat=39.7684&lon=-86.158")
         p.raise_for_status()
     except requests.exceptions.HTTPError:
         print("\n\nTHE API IS DOWN\n\n")  
